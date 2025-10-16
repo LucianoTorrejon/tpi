@@ -1,0 +1,62 @@
+# Maven / Java
+target/
+**/target/
+.mvn/
+mvnw
+mvnw.cmd
+dependency-reduced-pom.xml
+*.class
+*.jar
+*.war
+*.ear
+*.iml
+*.ipr
+*.iws
+*.log
+*.hprof
+
+# Build tools
+build/
+out/
+dist/
+
+# IDEs
+.idea/
+.vscode/
+.project
+.classpath
+.factorypath
+.settings/
+.metadata/
+*.launch
+
+# Operating systems
+.DS_Store
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+# Environment files
+.env
+.env.*
+
+# Otros binarios comunes
+*.zip
+*.gz
+*.bz2
+*.7z
+*.tar
+*.db
+*.sqlite
+*.png
+*.jpg
+*.jpeg
+*.gif
+*.mp3
+*.mp4
+*.mov
+*.avi
+*.exe
+*.dll
+*.so
+*.bin

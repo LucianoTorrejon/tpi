@@ -1,0 +1,23 @@
+server:
+  port: 8083
+spring:
+  application:
+    name: trucks-depots-service
+  datasource:
+    url: jdbc:postgresql://trucks-depots-db:5432/trucks
+    username: trucks_user
+    password: trucks_pass
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: http://keycloak:8080/realms/logistica
+springdoc:
+  api-docs:
+    path: /v3/api-docs
+  swagger-ui:
+    path: /swagger-ui.html
