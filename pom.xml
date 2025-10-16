@@ -18,6 +18,7 @@
         <maven.compiler.release>17</maven.compiler.release>
         <spring.boot.version>3.2.5</spring.boot.version>
         <spring-cloud.version>2023.0.1</spring-cloud.version>
+        <maven.exec.skip>true</maven.exec.skip>
     </properties>
     <dependencyManagement>
         <dependencies>
@@ -39,6 +40,15 @@
     </dependencyManagement>
 
     <build>
+        <pluginManagement>
+            <plugins>
+                <plugin>
+                    <groupId>org.springframework.boot</groupId>
+                    <artifactId>spring-boot-maven-plugin</artifactId>
+                    <version>${spring.boot.version}</version>
+                </plugin>
+            </plugins>
+        </pluginManagement>
         <plugins>
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
