@@ -1,0 +1,111 @@
+version: '3.9'
+
+services:
+  keycloak:
+    image: quay.io/keycloak/keycloak:22.0
+    command: ["start-dev", "--import-realm"]
+    environment:
+      KEYCLOAK_ADMIN: admin
+      KEYCLOAK_ADMIN_PASSWORD: admin
+    volumes:
+      - ./infrastructure/keycloak/realm-export.json:/opt/keycloak/data/import/realm-export.json
+    ports:
+      - "8085:8080"
+
+  clients-containers-db:
+    image: postgres:15
+    environment:
+      POSTGRES_DB: clients
+      POSTGRES_USER: clients_user
+      POSTGRES_PASSWORD: clients_pass
+    ports:
+      - "5433:5432"
+
+  requests-routes-db:
+    image: postgres:15
+    environment:
+      POSTGRES_DB: requests
+      POSTGRES_USER: requests_user
+      POSTGRES_PASSWORD: requests_pass
+    ports:
+      - "5434:5432"
+
+  trucks-depots-db:
+    image: postgres:15
+    environment:
+      POSTGRES_DB: trucks
+      POSTGRES_USER: trucks_user
+      POSTGRES_PASSWORD: trucks_pass
+    ports:
+      - "5435:5432"
+
+  rates-costs-db:
+    image: postgres:15
+    environment:
+      POSTGRES_DB: rates
+      POSTGRES_USER: rates_user
+      POSTGRES_PASSWORD: rates_pass
+    ports:
+      - "5436:5432"
+
+  clients-containers-service:
+    build:
+      context: .
+      dockerfile: services/clients-containers-service/Dockerfile
+    environment:
+      SPRING_PROFILES_ACTIVE: docker
+    depends_on:
+      - clients-containers-db
+      - keycloak
+    ports:
+      - "8081:8081"
+
+  requests-routes-service:
+    build:
+      context: .
+      dockerfile: services/requests-routes-service/Dockerfile
+    environment:
+      SPRING_PROFILES_ACTIVE: docker
+    depends_on:
+      - requests-routes-db
+      - keycloak
+    ports:
+      - "8082:8082"
+
+  trucks-depots-service:
+    build:
+      context: .
+      dockerfile: services/trucks-depots-service/Dockerfile
+    environment:
+      SPRING_PROFILES_ACTIVE: docker
+    depends_on:
+      - trucks-depots-db
+      - keycloak
+    ports:
+      - "8083:8083"
+
+  rates-costs-service:
+    build:
+      context: .
+      dockerfile: services/rates-costs-service/Dockerfile
+    environment:
+      SPRING_PROFILES_ACTIVE: docker
+      GOOGLE_MAPS_API_KEY: ${GOOGLE_MAPS_API_KEY:-}
+    depends_on:
+      - rates-costs-db
+      - keycloak
+      - trucks-depots-service
+    ports:
+      - "8084:8084"
+
+  api-gateway:
+    build:
+      context: .
+      dockerfile: gateway/api-gateway/Dockerfile
+    depends_on:
+      - clients-containers-service
+      - requests-routes-service
+      - trucks-depots-service
+      - rates-costs-service
+    ports:
+      - "8080:8080"

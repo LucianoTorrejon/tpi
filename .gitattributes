@@ -1,0 +1,14 @@
+* text=auto
+
+*.java text diff
+*.kt text diff
+*.xml text diff
+*.yml text diff
+*.yaml text diff
+*.json text diff
+*.md text diff
+*.properties text diff
+*.sql text diff
+*.sh text diff
+Dockerfile text diff
+*/Dockerfile text diff

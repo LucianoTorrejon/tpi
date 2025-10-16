@@ -1,0 +1,45 @@
+{
+  "realm": "logistica",
+  "enabled": true,
+  "users": [],
+  "roles": {
+    "realm": [
+      {"name": "Cliente", "description": "Clientes finales"},
+      {"name": "Operador", "description": "Operadores logísticos"},
+      {"name": "Administrador", "description": "Administradores del sistema"},
+      {"name": "Transportista", "description": "Transportistas"}
+    ]
+  },
+  "clients": [
+    {
+      "clientId": "gateway",
+      "secret": "secret",
+      "serviceAccountsEnabled": true,
+      "standardFlowEnabled": true,
+      "publicClient": false,
+      "redirectUris": ["http://localhost:8080/*"],
+      "directAccessGrantsEnabled": true,
+      "protocolMappers": [
+        {
+          "name": "realm roles",
+          "protocol": "openid-connect",
+          "protocolMapper": "oidc-usermodel-realm-role-mapper",
+          "consentRequired": false,
+          "config": {
+            "claim.name": "roles",
+            "jsonType.label": "String",
+            "multivalued": "true",
+            "userinfo.token.claim": "true",
+            "id.token.claim": "true",
+            "access.token.claim": "true"
+          }
+        }
+      ]
+    },
+    {
+      "clientId": "postman",
+      "publicClient": true,
+      "redirectUris": ["*"]
+    }
+  ]
+}

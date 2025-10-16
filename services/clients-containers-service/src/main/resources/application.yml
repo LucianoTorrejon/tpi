@@ -1,0 +1,30 @@
+server:
+  port: 8081
+spring:
+  application:
+    name: clients-containers-service
+  datasource:
+    url: jdbc:postgresql://clients-containers-db:5432/clients
+    username: clients_user
+    password: clients_pass
+  jpa:
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        format_sql: true
+    show-sql: true
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: http://keycloak:8080/realms/logistica
+logging:
+  level:
+    root: INFO
+    org.springframework.security: INFO
+springdoc:
+  api-docs:
+    path: /v3/api-docs
+  swagger-ui:
+    path: /swagger-ui.html

@@ -1,0 +1,29 @@
+server:
+  port: 8084
+spring:
+  application:
+    name: rates-costs-service
+  datasource:
+    url: jdbc:postgresql://rates-costs-db:5432/rates
+    username: rates_user
+    password: rates_pass
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: http://keycloak:8080/realms/logistica
+springdoc:
+  api-docs:
+    path: /v3/api-docs
+  swagger-ui:
+    path: /swagger-ui.html
+clients:
+  trucks:
+    url: http://trucks-depots-service:8083
+google:
+  maps:
+    api-key: ${GOOGLE_MAPS_API_KEY:}
