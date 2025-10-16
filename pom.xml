@@ -18,6 +18,7 @@
         <maven.compiler.release>17</maven.compiler.release>
         <spring.boot.version>3.2.5</spring.boot.version>
         <spring-cloud.version>2023.0.1</spring-cloud.version>
+        <maven.exec.skip>true</maven.exec.skip>
     </properties>
     <dependencyManagement>
         <dependencies>
@@ -48,5 +49,15 @@
                 </plugin>
             </plugins>
         </pluginManagement>
+        <plugins>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>exec-maven-plugin</artifactId>
+                <version>3.6.1</version>
+                <configuration>
+                    <skip>true</skip>
+                </configuration>
+            </plugin>
+        </plugins>
     </build>
 </project>
